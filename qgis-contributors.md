@@ -4,7 +4,7 @@ This [flow](qgis-contributors.json) will fetch the data from https://raw.githubu
 
 It demonstrates some JSON parsing, reconstructing the data into the simple, non geojson form used by https://flows.nodered.org/node/node-red-contrib-web-worldmap (note the worldmap does also support GeoJSON).
 
-In my testing the map did not work properly in Firefox, works well in Chrome.
+In my testing the map did not work properly in Firefox (update: now it seems to work!), works well in Chrome.
 
 Map data is dynamically updated on the map as the flow runs.
 
