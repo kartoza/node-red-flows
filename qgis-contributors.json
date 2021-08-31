@@ -1,0 +1,332 @@
+[
+    {
+        "id": "2d6f4bb92b25a5e9",
+        "type": "tab",
+        "label": "QGS Contributors",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "602ed865a8a30e09",
+        "type": "split",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "splt": "/",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 570,
+        "y": 580,
+        "wires": [
+            [
+                "30318622c802bae2"
+            ]
+        ]
+    },
+    {
+        "id": "2af35561c0c52b8c",
+        "type": "debug",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "30318622c802bae2",
+        "type": "change",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.name",
+                "pt": "msg",
+                "to": "payload.properties.Name",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.geometry.coordinates[1]",
+                "pt": "msg",
+                "to": "payload.lat",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.geometry.coordinates[0]",
+                "pt": "msg",
+                "to": "payload.lon",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.properties",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.type",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.geometry",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.popped",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "payload.color",
+                "pt": "msg",
+                "to": "#ff0000",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.layer",
+                "pt": "msg",
+                "to": "\"contributors\"",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 440,
+        "wires": [
+            [
+                "63e60d0c28c39990",
+                "c5173d4449fc9661"
+            ]
+        ]
+    },
+    {
+        "id": "f546232439629edf",
+        "type": "http request",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "QGIS Contributors",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://raw.githubusercontent.com/qgis/QGIS/master/resources/data/contributors.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "9e7db21e43d3ed8b"
+            ]
+        ]
+    },
+    {
+        "id": "bbe9b345bee12c19",
+        "type": "inject",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 100,
+        "wires": [
+            [
+                "f546232439629edf",
+                "58390eb72320b999"
+            ]
+        ]
+    },
+    {
+        "id": "21feccab543a8a9e",
+        "type": "change",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.features",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 460,
+        "wires": [
+            [
+                "602ed865a8a30e09"
+            ]
+        ]
+    },
+    {
+        "id": "9e7db21e43d3ed8b",
+        "type": "json",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 310,
+        "y": 320,
+        "wires": [
+            [
+                "21feccab543a8a9e"
+            ]
+        ]
+    },
+    {
+        "id": "c5173d4449fc9661",
+        "type": "file",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "WriteToFile",
+        "filename": "/data/contributors.json",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1050,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "63e60d0c28c39990",
+        "type": "worldmap",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "World Map",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "deg",
+        "showgrid": "true",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "x": 1070,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d8973afa59c5922c",
+        "type": "worldmap in",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "path": "/worldmap",
+        "events": "all",
+        "x": 580,
+        "y": 740,
+        "wires": [
+            [
+                "2af35561c0c52b8c"
+            ]
+        ]
+    },
+    {
+        "id": "c368c80f18c7d772",
+        "type": "inject",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{ \"name\":\"Jason\", \"lat\":51.05, \"lon\":-1.35 }",
+        "payloadType": "str",
+        "x": 650,
+        "y": 80,
+        "wires": [
+            [
+                "91086f7feb60647d"
+            ]
+        ]
+    },
+    {
+        "id": "91086f7feb60647d",
+        "type": "json",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 810,
+        "y": 200,
+        "wires": [
+            [
+                "63e60d0c28c39990"
+            ]
+        ]
+    },
+    {
+        "id": "58390eb72320b999",
+        "type": "file",
+        "z": "2d6f4bb92b25a5e9",
+        "name": "Delete contributors file",
+        "filename": "/data/contributors.json",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "delete",
+        "encoding": "none",
+        "x": 320,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    }
+]
