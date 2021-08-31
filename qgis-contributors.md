@@ -1,6 +1,6 @@
 # QGIS Contributors
 
-This flow will fetch the data from https://raw.githubusercontent.com/qgis/QGIS/master/resources/data/contributors.json
+This [flow](qgis-contributors.json) will fetch the data from https://raw.githubusercontent.com/qgis/QGIS/master/resources/data/contributors.json
 
 It demonstrates some JSON parsing, reconstructing the data into the simple, non geojson form used by https://flows.nodered.org/node/node-red-contrib-web-worldmap (note the worldmap does also support GeoJSON).
 
